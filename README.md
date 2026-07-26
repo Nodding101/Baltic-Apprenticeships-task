@@ -31,17 +31,16 @@ The flowchart shows how a real world deployment could work. For the sake of this
 
 ### Setup Steps
 
-1. Clone or download the repository:
-   git clone git@github.com:Nodding101/Baltic-Apprenticeships-task.git
-   cd baltic_apprenticeship
-
+1. Clone or download the repository and cd into it
+   
 2. Install dependencies:
    npm install
 
 3. Export your OpenRouter API key as an environment variable:
-   (Note: Never hardcode secrets into source files).
+   
    * Linux / macOS:
      export OPENROUTER_API_KEY="sk-or-v1-your-api-key-here"
+     
    * Windows (PowerShell):
      $env:OPENROUTER_API_KEY="sk-or-v1-your-api-key-here"
 

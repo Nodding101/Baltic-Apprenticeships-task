@@ -8,6 +8,8 @@ A lightweight prototype built for the Graduate AI & Automation Engineer Technica
 
 The diagram below illustrates how incoming website messages flow through the local server controller, get parsed and structured by the OpenRouter LLM API, persist to a mock database cache, and render on the team dashboard.
 
+The flowchart shows how a real world deployment could work. For the sake of this task, several features have been simplified. These include, not requiring a SQL database and not using reinforcement learning. For more information see the section on limitations below.
+
 ![System Flowchart](flowchart.png)
 
 ---
@@ -72,3 +74,6 @@ The diagram below illustrates how incoming website messages flow through the loc
 ## Other notes
 
 * Currently the initial enquiries.json has been preprocessed and saved to process.json. If you would like to process all enquiries from scratch, please delete process.json. Warning, due to processing constraints it may take a while for the webpage to load.
+* In a realworld deployment, reinforcement learning is not strictly required (and may be difficult to implement if not using a local LLM. It would also likely only be useful for large business where the volume of enquiries is sufficient to affect the model's retrained weights.
+* A realworld deployment may also require the use of other API and services, for instance sending processed enquiries to a ticketing system.
+

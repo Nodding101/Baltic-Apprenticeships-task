@@ -12,6 +12,7 @@ The flowchart shows how a real world deployment could work. For the sake of this
 
 ![System Flowchart](flowchart.png)
 
+
 ---
 
 ## Tools & Approach
@@ -20,6 +21,11 @@ The flowchart shows how a real world deployment could work. For the sake of this
 * TypeScript: Ensures type safety for categorization (Sales, Support, Complaint, Manual Review) and data contracts.
 * OpenRouter API (Llama 3): Chosen to handle natural language understanding cost-effectively without requiring local hardware weights or paid OpenAI account setups.
 * JSON File Caching (process.json): Acts as a local mock database to ensure persistent storage across server sessions and fast page load speeds.
+* 
+---
+## Implementation details
+
+The implemented solution uses three main files. Server.js is used to set up the local web sever. Index.ts displays the processed responses and allows the user to input new enquiries. llm.ts calls the OpenRouter api in order to process the submitted enquiries
 
 ---
 
@@ -72,7 +78,7 @@ The flowchart shows how a real world deployment could work. For the sake of this
  
 ## Other notes
 
-* Currently the initial enquiries.json has been preprocessed and saved to process.json. If you would like to process all enquiries from scratch, please delete process.json. Warning, due to processing constraints it may take a while for the webpage to load.
+* Currently the initial enquiries.json has been preprocessed and saved to process.json. If you would like to process all enquiries from scratch, please delete process.json and restart the server. Warning, due to processing constraints it may take a while for the webpage to load.
 * In a realworld deployment, reinforcement learning is not strictly required (and may be difficult to implement if not using a local LLM. It would also likely only be useful for large business where the volume of enquiries is sufficient to affect the model's retrained weights.
 * A realworld deployment may also require the use of other API and services, for instance sending processed enquiries to a ticketing system.
 

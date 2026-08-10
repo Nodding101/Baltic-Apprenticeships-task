@@ -78,12 +78,38 @@ export async function buildDashboardHTML(): Promise<string> {
     const rawData = fs.readFileSync(inputPath, "utf-8");
     const enquiries: Enquiry[] = JSON.parse(rawData);
 
-    processedData = await Promise.all(
-      enquiries.map(async (enquiry) => {
-        const result = await processWithLLM(enquiry.message);
-        return { ...enquiry, ...result };
-      }),
-    );
+    processedData = [];
+
+    const BATCH_SIZE = 20;
+
+    for (let i = 0; i < enquiries.length; i += BATCH_SIZE) {
+      // 1. Slice the array into a chunk of 20 (or whatever is left)
+      const batch = enquiries.slice(i, i + BATCH_SIZE);
+      console.log(
+        `\nProcessing batch ${Math.floor(i / BATCH_SIZE) + 1} (${batch.length} items)...`,
+      );
+
+      // 2. Process this specific batch concurrently
+      const batchResults = await Promise.all(
+        batch.map(async (enquiry) => {
+          const result = await processWithLLM(enquiry.message);
+          return { ...enquiry, ...result };
+        }),
+      );
+
+      // 3. Add the finished batch to our main array
+      processedData.push(...batchResults);
+
+      // 4. If there are still more items to process, wait 60 seconds for the rate limit to reset
+      if (i + BATCH_SIZE < enquiries.length) {
+        console.log(
+          "Rate limit reached. Waiting 60 seconds for OpenRouter to reset...",
+        );
+        await new Promise((resolve) => setTimeout(resolve, 60000));
+      }
+    }
+
+    console.log("Batch processing finished");
     fs.writeFileSync(outputPath, JSON.stringify(processedData, null, 2));
   }
 

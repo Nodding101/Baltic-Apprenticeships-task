@@ -4,7 +4,7 @@ import OpenAI from "openai";
 // Define the exact categories requested by the brief
 export type Category = "Sales" | "Support" | "Complaint" | "Manual Review";
 
-// Initialize the OpenRouter client using the OpenAI SDK format
+// Initialise the OpenRouter client using the OpenAI SDK format
 const openai = new OpenAI({
   baseURL: "https://openrouter.ai/api/v1",
   apiKey: process.env.OPENROUTER_API_KEY, // Loaded from your system environment
@@ -46,7 +46,7 @@ export async function processWithLLM(
     };
   } catch (error) {
     console.error("LLM Processing Error:", error);
-    // Fallback so your server doesn't crash if the API fails
+    // Fallback so the server doesn't crash if the API fails
     return {
       category: "Manual Review",
       summary: "System error processing this message. Manual review required.",
